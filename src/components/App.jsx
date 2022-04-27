@@ -2,11 +2,18 @@ import { useState } from "react";
 import useGetData from "../hooks/useGetData";
 import {Cards} from "./cards/Cards";
 
+
+const defurl = "https://pokeapi.co/api/v2/pokemon";
+
 function App() {
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
+  const [url, setUrl] = useState(defurl);
   const [data, loading, error] = useGetData(url);
   const [search, setSearch] = useState("");
-  
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+    
   return (
     <>
       <h1 style={{textAlign: "center"}}>Pokemon</h1>
@@ -15,7 +22,7 @@ function App() {
         type="text" 
         className="buscador"
         placeholder="Ingrese Pokemon a Buscar"
-        onChange={(e)=>setSearch(e.target.value)}>
+        onChange={handleChange}>
         </input>
       </div>
       {
@@ -29,7 +36,7 @@ function App() {
         <button
           onClick={() => {
             if(data.previous == null){
-              setUrl("https://pokeapi.co/api/v2/pokemon/");
+              setUrl(defurl);
             }else{
               setUrl(data.previous)
             }
