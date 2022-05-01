@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import CardsPokemon from './CardsPokemon'
 import './Cards.css'
 import { useFilter } from '../../hooks/useFilter'
+import { PokeApiContext } from '../../contexts/PokeApi.Context'
 
-export const Cards = ({pokemones,search}) => {
-  
+export const Cards = ({search}) => {
+  const pokemones = useContext(PokeApiContext);
   const filtered = useFilter(pokemones, search);
-  /* const filtered = pokemones.filter((pokemon)=>{
-    return pokemon.name.toLowerCase().includes(search.toLowerCase());
-  }) */
   return (
     <div className='container'>
         <ul className='cards'>

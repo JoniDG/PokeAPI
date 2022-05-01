@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PokeApiContext } from "../contexts/PokeApi.Context";
 import useGetData from "../hooks/useGetData";
 import {Cards} from "./cards/Cards";
 
@@ -13,24 +14,26 @@ function App() {
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
-    
   return (
     <>
-      <h1 style={{textAlign: "center"}}>Pokemon</h1>
-      <div style={{textAlign: "center"}}>
-        <input 
-        type="text" 
-        className="buscador"
-        placeholder="Ingrese Pokemon a Buscar"
-        onChange={handleChange}>
-        </input>
-      </div>
+      <PokeApiContext.Provider
+      value={data.results}
+      >
+        <h1 style={{textAlign: "center"}}>Pokemon</h1>
+        <div style={{textAlign: "center"}}>
+          <input 
+            type="text" 
+            className="buscador"
+            placeholder="Ingrese Pokemon a Buscar"
+            onChange={handleChange}>
+          </input>
+        </div>
       {
         loading ? (
           <h2>Cargando...</h2>
         ) : error ?(
           <h3>Error: {error.message}</h3>
-        ) : <Cards pokemones={data.results} search={search}/>
+        ) : <Cards search={search}/>
       }
       <div style={{textAlign: "center"}}>
         <button
@@ -50,9 +53,10 @@ function App() {
         >Next 
         </button>
       </div>
+      </PokeApiContext.Provider>
+      
     </>
   );
 };
 export default App;
-
 
